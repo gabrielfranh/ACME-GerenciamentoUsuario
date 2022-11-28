@@ -15,7 +15,7 @@ namespace CadastroUsuarioAPI.Repositories
             throw new NotImplementedException();
         }
 
-        public User UpdateUser(User user)
+        public bool UpdateUser(User user)
         {
             throw new NotImplementedException();
         }

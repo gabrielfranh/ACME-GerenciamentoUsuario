@@ -16,40 +16,73 @@ namespace CadastroUsuarioAPI.Controllers
         }
 
         [HttpGet]
-        public DefaultResponse GetUsers()
+        public IActionResult GetUsers()
         {
-            _userService.GetUsers();
+            try{
+                var users = _userService.GetUsers();
+                return Ok(users);
+            }
+            catch(Exception ex){
+                return BadRequest(new {
+                    message = ex.Message
+                });
+            }
         }
 
         [HttpPost]
-        public DefaultResponse CreateUser([FromBody] User user)
+        public IActionResult CreateUser([FromBody] User user)
         {
-            if (user == null)
-                return new DefaultResponse() {
-                    HttpStatusCode = 400,
-                    Object = BadRequest()
-                };
+            try{
+                if (user == null)
+                    return BadRequest();
 
-            _userService.CreateUser(user);
+                var userCreated = _userService.CreateUser(user);
+                return Ok(userCreated);
+            }
+            catch(Exception ex){
+                return BadRequest(new {
+                    message = ex.Message
+                });
+            }
         }
 
         [HttpPut]
-        public DefaultResponse UpdateUser([FromBody] User user)
+        public IActionResult UpdateUser([FromBody] User user)
         {
-            if (user == null)
-                return new DefaultResponse()
-                {
-                    HttpStatusCode = 400,
-                    Object = BadRequest()
-                };
+            try{
+                if (user == null)
+                    return BadRequest();
 
-            _userService.UpdateUser(user);
+                var userUpdated = _userService.UpdateUser(user);
+                
+                if(userUpdated)
+                    return NoContent();
+                
+                return  StatusCode(StatusCodes.Status500InternalServerError);
+            }
+            catch(Exception ex){
+                return BadRequest(new {
+                    message = ex.Message
+                });
+            }
         }
 
         [HttpDelete]
-        public bool DefaultResponse(int userId)
+        public IActionResult DefaultResponse(int userId)
         {
-            _userService.DeleteUser(userId);
+            try{
+                var userDeleted = _userService.DeleteUser(userId);
+                
+                if(userDeleted)
+                    return NoContent();
+
+                return  StatusCode(StatusCodes.Status500InternalServerError);
+            }
+            catch(Exception ex){
+                return BadRequest(new {
+                    message = ex.Message
+                });
+            }
         }
     }
 }

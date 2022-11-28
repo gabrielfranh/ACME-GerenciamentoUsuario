@@ -22,7 +22,7 @@ namespace CadastroUsuarioAPI.Services
             return _userRepository.CreateUser(user);
         }
 
-        public User UpdateUser(User user)
+        public bool UpdateUser(User user)
         {
             return _userRepository.UpdateUser(user);
         }

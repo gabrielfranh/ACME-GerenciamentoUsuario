@@ -8,7 +8,7 @@ namespace CadastroUsuarioAPI.Repositories.Interface
 
         public User CreateUser(User user);
 
-        public User UpdateUser(User user);
+        public bool UpdateUser(User user);
 
         public bool DeleteUser(int userId);
     }
