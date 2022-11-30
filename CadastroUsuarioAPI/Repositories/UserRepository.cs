@@ -1,28 +1,66 @@
-﻿using CadastroUsuarioAPI.Models;
+﻿using AutoMapper;
+using CadastroUsuarioAPI.Context;
+using CadastroUsuarioAPI.DTO;
+using CadastroUsuarioAPI.Models;
 using CadastroUsuarioAPI.Repositories.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace CadastroUsuarioAPI.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public IEnumerable<User> GetUsers()
+        private readonly MySQLContext _mySQLContext;
+        private readonly IMapper _mapper;
+
+        public UserRepository(MySQLContext mySQLContext, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _mySQLContext = mySQLContext;
+            _mapper = mapper;
         }
 
-        public User CreateUser(User user)
+        public async Task<IEnumerable<UsuarioDTO>> GetUsers()
         {
-            throw new NotImplementedException();
+            var usuarios = await _mySQLContext.Usuarios.ToListAsync();
+
+            return _mapper.Map<List<UsuarioDTO>>(usuarios);
         }
 
-        public bool UpdateUser(User user)
+        public async Task<UsuarioDTO> CreateUser(UsuarioDTO usuarioDTO)
         {
-            throw new NotImplementedException();
+            var usuario = _mapper.Map<Usuario>(usuarioDTO);
+            await _mySQLContext.Usuarios.AddAsync(usuario);
+            await _mySQLContext.SaveChangesAsync();
+            return _mapper.Map<UsuarioDTO>(usuario);
         }
 
-        public bool DeleteUser(int userId)
+        public async Task<UsuarioDTO> UpdateUser(UsuarioDTO usuarioDTO)
         {
-            throw new NotImplementedException();
+            var usuario = _mapper.Map<Usuario>(usuarioDTO);
+            _mySQLContext.Usuarios.Update(usuario);
+            await _mySQLContext.SaveChangesAsync();
+            return _mapper.Map<UsuarioDTO>(usuario);
+        }
+
+        public async Task<bool> DeleteUser(int userId)
+        {
+            try
+            {
+                var usuario = await _mySQLContext.Usuarios.Where(p => p.Id == userId).FirstOrDefaultAsync();
+
+                if (usuario == null)
+                    return false;
+                else
+                {
+                    _mySQLContext.Usuarios.Remove(usuario);
+                    await _mySQLContext.SaveChangesAsync();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
     }
 }

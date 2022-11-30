@@ -1,4 +1,4 @@
-using CadastroUsuarioAPI.Models;
+using CadastroUsuarioAPI.DTO;
 using CadastroUsuarioAPI.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,10 +16,10 @@ namespace CadastroUsuarioAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetUsers()
+        public async Task<IActionResult> GetUsers()
         {
             try{
-                var users = _userService.GetUsers();
+                var users = await _userService.GetUsers();
                 return Ok(users);
             }
             catch(Exception ex){
@@ -30,13 +30,13 @@ namespace CadastroUsuarioAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateUser([FromBody] User user)
+        public async Task<IActionResult> CreateUser([FromBody] UsuarioDTO user)
         {
             try{
                 if (user == null)
                     return BadRequest();
 
-                var userCreated = _userService.CreateUser(user);
+                var userCreated = await _userService.CreateUser(user);
                 return Ok(userCreated);
             }
             catch(Exception ex){
@@ -47,16 +47,13 @@ namespace CadastroUsuarioAPI.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateUser([FromBody] User user)
+        public async Task<IActionResult> UpdateUser([FromBody] UsuarioDTO user)
         {
             try{
                 if (user == null)
                     return BadRequest();
 
-                var userUpdated = _userService.UpdateUser(user);
-                
-                if(userUpdated)
-                    return NoContent();
+                var userUpdated = await _userService.UpdateUser(user);
                 
                 return  StatusCode(StatusCodes.Status500InternalServerError);
             }
@@ -68,10 +65,10 @@ namespace CadastroUsuarioAPI.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DefaultResponse(int userId)
+        public async Task<IActionResult> DefaultResponse(int userId)
         {
             try{
-                var userDeleted = _userService.DeleteUser(userId);
+                var userDeleted = await _userService.DeleteUser(userId);
                 
                 if(userDeleted)
                     return NoContent();

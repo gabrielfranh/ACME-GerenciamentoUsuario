@@ -1,35 +1,36 @@
-﻿using CadastroUsuarioAPI.Models;
+﻿using CadastroUsuarioAPI.DTO;
+using CadastroUsuarioAPI.Repositories.Interface;
 using CadastroUsuarioAPI.Services.Interface;
 
 namespace CadastroUsuarioAPI.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserService _userRepository;
+        private readonly IUserRepository _userRepository;
 
-        public UserService(IUserService userRepository)
+        public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
 
-        public IEnumerable<User> GetUsers()
+        public async Task<IEnumerable<UsuarioDTO>> GetUsers()
         {
-            return _userRepository.GetUsers();
+            return await _userRepository.GetUsers();
         }
 
-        public User CreateUser(User user)
+        public async Task<UsuarioDTO> CreateUser(UsuarioDTO user)
         {
-            return _userRepository.CreateUser(user);
+            return await _userRepository.CreateUser(user);
         }
 
-        public bool UpdateUser(User user)
+        public async Task<UsuarioDTO> UpdateUser(UsuarioDTO user)
         {
-            return _userRepository.UpdateUser(user);
+            return await _userRepository.UpdateUser(user);
         }
 
-        public bool DeleteUser(int userId)
+        public async Task<bool> DeleteUser(int userId)
         {
-            return _userRepository.DeleteUser(userId);
+            return await _userRepository.DeleteUser(userId);
         }
     }
 }
