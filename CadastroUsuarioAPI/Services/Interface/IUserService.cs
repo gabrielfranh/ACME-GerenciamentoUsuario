@@ -4,8 +4,6 @@ namespace CadastroUsuarioAPI.Services.Interface
 {
     public interface IUserService
     {
-        public Task<IEnumerable<UsuarioDTO>> GetUsers();
-
         public Task<UsuarioDTO> GetUserById(int userId);
 
         public Task<UsuarioDTO> CreateUser(UsuarioDTO user);

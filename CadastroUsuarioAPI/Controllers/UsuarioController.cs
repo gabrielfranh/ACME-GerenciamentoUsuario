@@ -15,21 +15,6 @@ namespace CadastroUsuarioAPI.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetUsers()
-        {
-            try
-            {
-                var users = await _userService.GetUsers();
-                return Ok(users);
-            }
-            catch(Exception ex){
-                return BadRequest(new {
-                    message = ex.Message
-                });
-            }
-        }
-
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetUserById(int userId)
         {
@@ -87,7 +72,7 @@ namespace CadastroUsuarioAPI.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DefaultResponse(int userId)
+        public async Task<IActionResult> Delete(int userId)
         {
             try
             {

@@ -18,13 +18,6 @@ namespace CadastroUsuarioAPI.Repositories
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<UsuarioDTO>> GetUsers()
-        {
-            var usuarios = await _mySQLContext.Usuarios.ToListAsync();
-
-            return _mapper.Map<List<UsuarioDTO>>(usuarios);
-        }
-
         public async Task<UsuarioDTO> CreateUser(UsuarioDTO usuarioDTO)
         {
             var usuario = _mapper.Map<Usuario>(usuarioDTO);
