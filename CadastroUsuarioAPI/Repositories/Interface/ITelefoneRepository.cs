@@ -4,7 +4,7 @@ namespace CadastroUsuarioAPI.Repositories.Interface
 {
     public interface ITelefoneRepository
     {
-        public Task<IEnumerable<TelefoneDTO>> GetTelefone();
+        public Task<IEnumerable<TelefoneDTO>> GetTelefone(int usuarioId);
 
         public Task<TelefoneDTO> CreateTelefone(TelefoneDTO telefoneDTO);
 

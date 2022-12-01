@@ -8,8 +8,10 @@ namespace CadastroUsuarioAPI.Repositories.Interface
 
         public Task<UsuarioDTO> CreateUser(UsuarioDTO usuarioDTO);
 
-        public Task<UsuarioDTO> UpdateUser(UsuarioDTO usuarioDTO);
+        public Task<bool> UpdateUser(UsuarioDTO usuarioDTO);
 
         public Task<bool> DeleteUser(int userId);
+
+        public Task<UsuarioDTO> GetUserById(int userId);
     }
 }

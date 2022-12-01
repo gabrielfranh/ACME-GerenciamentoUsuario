@@ -31,16 +31,14 @@ namespace CadastroUsuarioAPI.Repositories
         {
             try
             {
-                var telefone = await _mySQLContext.Telefones.Where(p => p.Id == telefoneId).FirstOrDefaultAsync();
+                var telefone = await _mySQLContext.Telefones.FirstOrDefaultAsync(p => p.Id == telefoneId);
 
                 if (telefone == null)
                     return false;
-                else
-                {
-                    _mySQLContext.Telefones.Remove(telefone);
-                    await _mySQLContext.SaveChangesAsync();
-                    return true;
-                }
+                
+                _mySQLContext.Telefones.Remove(telefone);
+                await _mySQLContext.SaveChangesAsync();
+                return true;
             }
             catch (Exception)
             {
@@ -49,9 +47,12 @@ namespace CadastroUsuarioAPI.Repositories
             }
         }
 
-        public async Task<IEnumerable<TelefoneDTO>> GetTelefone()
+        public async Task<IEnumerable<TelefoneDTO>> GetTelefone(int usuarioId)
         {
-            var telefones = await _mySQLContext.Telefones.ToListAsync();
+            var telefones = await _mySQLContext
+                                    .Telefones
+                                    .Where(telefone => telefone.UsuarioId == usuarioId)
+                                    .ToListAsync();
 
             return _mapper.Map<List<TelefoneDTO>>(telefones);
         }

@@ -18,7 +18,8 @@ namespace CadastroUsuarioAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
-            try{
+            try
+            {
                 var users = await _userService.GetUsers();
                 return Ok(users);
             }
@@ -29,10 +30,27 @@ namespace CadastroUsuarioAPI.Controllers
             }
         }
 
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetUserById(int userId)
+        {
+            try
+            {
+                var user = await _userService.GetUserById(userId);
+                return Ok(user);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new {
+                    message = ex.Message
+                });
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] UsuarioDTO user)
         {
-            try{
+            try
+            {
                 if (user == null)
                     return BadRequest();
 
@@ -49,11 +67,15 @@ namespace CadastroUsuarioAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateUser([FromBody] UsuarioDTO user)
         {
-            try{
+            try
+            {
                 if (user == null)
                     return BadRequest();
 
                 var userUpdated = await _userService.UpdateUser(user);
+
+                if(userUpdated)
+                    return NoContent();
                 
                 return  StatusCode(StatusCodes.Status500InternalServerError);
             }
@@ -67,7 +89,8 @@ namespace CadastroUsuarioAPI.Controllers
         [HttpDelete]
         public async Task<IActionResult> DefaultResponse(int userId)
         {
-            try{
+            try
+            {
                 var userDeleted = await _userService.DeleteUser(userId);
                 
                 if(userDeleted)

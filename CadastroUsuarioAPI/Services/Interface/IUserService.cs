@@ -6,9 +6,11 @@ namespace CadastroUsuarioAPI.Services.Interface
     {
         public Task<IEnumerable<UsuarioDTO>> GetUsers();
 
+        public Task<UsuarioDTO> GetUserById(int userId);
+
         public Task<UsuarioDTO> CreateUser(UsuarioDTO user);
 
-        public Task<UsuarioDTO> UpdateUser(UsuarioDTO user);
+        public Task<bool> UpdateUser(UsuarioDTO user);
 
         public Task<bool> DeleteUser(int userId);
     }

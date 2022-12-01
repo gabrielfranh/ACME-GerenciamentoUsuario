@@ -23,7 +23,7 @@ namespace CadastroUsuarioAPI.Services
             return await _userRepository.CreateUser(user);
         }
 
-        public async Task<UsuarioDTO> UpdateUser(UsuarioDTO user)
+        public async Task<bool> UpdateUser(UsuarioDTO user)
         {
             return await _userRepository.UpdateUser(user);
         }
@@ -31,6 +31,11 @@ namespace CadastroUsuarioAPI.Services
         public async Task<bool> DeleteUser(int userId)
         {
             return await _userRepository.DeleteUser(userId);
+        }
+
+        public async Task<UsuarioDTO> GetUserById(int userId)
+        {
+            return await _userRepository.GetUserById(userId);
         }
     }
 }

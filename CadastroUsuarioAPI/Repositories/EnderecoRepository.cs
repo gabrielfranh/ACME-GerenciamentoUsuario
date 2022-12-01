@@ -48,9 +48,12 @@ namespace CadastroUsuarioAPI.Repositories
             }
         }
 
-        public async Task<IEnumerable<EnderecoDTO>> GetEndereco()
+        public async Task<IEnumerable<EnderecoDTO>> GetEndereco(int usuarioId)
         {
-            var enderecos = await _mySQLContext.Enderecos.ToListAsync();
+            var enderecos = await _mySQLContext
+                                    .Enderecos
+                                    .Where(endereco => endereco.UsuarioId == usuarioId)
+                                    .ToListAsync();
 
             return _mapper.Map<List<EnderecoDTO>>(enderecos);
         }

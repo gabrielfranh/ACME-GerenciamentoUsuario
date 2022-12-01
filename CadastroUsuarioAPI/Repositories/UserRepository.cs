@@ -33,12 +33,19 @@ namespace CadastroUsuarioAPI.Repositories
             return _mapper.Map<UsuarioDTO>(usuario);
         }
 
-        public async Task<UsuarioDTO> UpdateUser(UsuarioDTO usuarioDTO)
+        public async Task<bool> UpdateUser(UsuarioDTO usuarioDTO)
         {
-            var usuario = _mapper.Map<Usuario>(usuarioDTO);
-            _mySQLContext.Usuarios.Update(usuario);
-            await _mySQLContext.SaveChangesAsync();
-            return _mapper.Map<UsuarioDTO>(usuario);
+            try
+            {
+                var usuario = _mapper.Map<Usuario>(usuarioDTO);
+                _mySQLContext.Usuarios.Update(usuario);
+                await _mySQLContext.SaveChangesAsync();
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
         }
 
         public async Task<bool> DeleteUser(int userId)
@@ -49,18 +56,21 @@ namespace CadastroUsuarioAPI.Repositories
 
                 if (usuario == null)
                     return false;
-                else
-                {
-                    _mySQLContext.Usuarios.Remove(usuario);
-                    await _mySQLContext.SaveChangesAsync();
-                    return true;
-                }
+                
+                _mySQLContext.Usuarios.Remove(usuario);
+                await _mySQLContext.SaveChangesAsync();
+                return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
+        }
+
+        public async Task<UsuarioDTO> GetUserById(int userId)
+        {
+            var user = await _mySQLContext.Usuarios.FirstOrDefaultAsync(user => user.Id == userId);
+            return _mapper.Map<UsuarioDTO>(user);
         }
     }
 }
