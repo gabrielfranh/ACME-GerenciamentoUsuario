@@ -1,15 +1,16 @@
-﻿using CadastroUsuarioAPI.DTO;
+﻿using CadastroUsuarioAPI.DTO.Usuario;
+using CadastroUsuarioAPI.Models;
 
 namespace CadastroUsuarioAPI.Repositories.Interface
 {
     public interface IUserRepository
     {
-        public Task<UsuarioDTO> CreateUser(UsuarioDTO usuarioDTO);
+        public Task<Usuario> CreateUser(Usuario usuario);
 
-        public Task<bool> UpdateUser(UsuarioDTO usuarioDTO);
+        public Task<bool> UpdateUser(Usuario usuario);
 
-        public Task<bool> DeleteUser(int userId);
+        public Task<bool> DeleteUser(Usuario usuario);
 
-        public Task<UsuarioDTO> GetUserById(int userId);
+        public Task<Usuario> GetUserById(int userId);
     }
 }

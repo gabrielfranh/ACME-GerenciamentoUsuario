@@ -1,4 +1,4 @@
-﻿namespace CadastroUsuarioAPI.DTO
+﻿namespace CadastroUsuarioAPI.DTO.Usuario
 {
     public class UsuarioDTO
     {
@@ -7,8 +7,8 @@
         public string Email { get; set; }
         public string Nome { get; set; }
         public DateTime DataNascimento { get; set; }
-        public string Documento { get; set; }
-        public byte[]? SenhaHash { get; set; }
+        public string RG { get; set; }
+        public string CPF { get; set; }
         public string Senha { get; set; }
     }
 }

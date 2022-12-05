@@ -26,9 +26,13 @@ namespace CadastroUsuarioAPI.Models
         [Required]
         public DateTime DataNascimento { get; set; }
 
-        [Column("documento")]
+        [Column("RG")]
         [Required]
-        public string Documento { get; set; }
+        public string RG { get; set; }
+        
+        [Column("CPF")]
+        [Required]
+        public string CPF { get; set; }
 
         [Column("senha")]
         [Required]

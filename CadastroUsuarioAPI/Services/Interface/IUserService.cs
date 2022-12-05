@@ -1,4 +1,4 @@
-﻿using CadastroUsuarioAPI.DTO;
+﻿using CadastroUsuarioAPI.DTO.Usuario;
 
 namespace CadastroUsuarioAPI.Services.Interface
 {
@@ -6,10 +6,10 @@ namespace CadastroUsuarioAPI.Services.Interface
     {
         public Task<UsuarioDTO> GetUserById(int userId);
 
-        public Task<UsuarioDTO> CreateUser(UsuarioDTO user);
+        public Task<UsuarioDTO> CreateUser(CriaUsuarioDTO user);
 
-        public Task<bool> UpdateUser(UsuarioDTO user);
+        public Task<bool?> UpdateUser(AtualizaUsuarioDTO user);
 
-        public Task<bool> DeleteUser(int userId);
+        public Task<bool?> DeleteUser(int userId);
     }
 }
