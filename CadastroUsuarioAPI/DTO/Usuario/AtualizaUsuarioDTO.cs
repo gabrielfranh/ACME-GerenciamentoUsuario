@@ -13,15 +13,5 @@ namespace CadastroUsuarioAPI.DTO.Usuario
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-
-        [Required]
-        [DataType(DataType.Password)]
-        [MinLength(8)]
-        public string Senha { get; set; }
-
-        [Required]
-        [DataType(DataType.Password)]
-        [Compare(nameof(AtualizaUsuarioDTO.Senha))]
-        public string ConfirmaSenha { get; set; }
     }
 }

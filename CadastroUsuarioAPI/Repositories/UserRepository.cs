@@ -58,5 +58,11 @@ namespace CadastroUsuarioAPI.Repositories
             var user = await _mySQLContext.Usuarios.FirstOrDefaultAsync(user => user.Id == userId);
             return user;
         }
+
+        public async Task<Usuario> GetUserByUsername(string userName)
+        {
+            var user = await _mySQLContext.Usuarios.FirstOrDefaultAsync(x => x.Username == userName);
+            return user;
+        }
     }
 }

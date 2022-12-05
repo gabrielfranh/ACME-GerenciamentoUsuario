@@ -21,6 +21,12 @@ namespace CadastroUsuarioAPI.Services
         public async Task<UsuarioDTO> CreateUser(CriaUsuarioDTO criaUsuarioDto)
         {
             var usuario = _mapper.Map<Usuario>(criaUsuarioDto);
+
+            var hash = SenhaUtils.GerarHash(criaUsuarioDto.Senha);
+
+            usuario.Senha = hash.senha;
+            usuario.Salt = hash.salt;
+
             await _userRepository.CreateUser(usuario);
             var usuarioDto = _mapper.Map<UsuarioDTO>(usuario);
             return usuarioDto;
@@ -51,6 +57,17 @@ namespace CadastroUsuarioAPI.Services
             if (usuario is null) return null;
             var usuarioDTO = _mapper.Map<UsuarioDTO>(usuario);
             return usuarioDTO;
+        }
+
+        public async Task<(UsuarioDTO usuario, string token)?> Authenticate(LoginDTO login)
+        {
+            var usuario = await _userRepository.GetUserByUsername(login.Username);
+            if (usuario is null) return null;
+            var senhaHash = SenhaUtils.PegarHash(usuario.Senha, usuario.Salt);
+            if (senhaHash != usuario.Senha) return null;
+            var token = TokenUtils.Gerar(usuario);
+            var usuarioDto = _mapper.Map<UsuarioDTO>(usuario);
+            return (usuarioDto, token);
         }
     }
 }

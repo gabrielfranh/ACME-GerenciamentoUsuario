@@ -90,14 +90,14 @@ namespace CadastroUsuarioAPI.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id");
 
+                    b.Property<string>("CPF")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("CPF");
+
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("dataNascimento");
-
-                    b.Property<string>("Documento")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("documento");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -109,9 +109,22 @@ namespace CadastroUsuarioAPI.Migrations
                         .HasColumnType("longtext")
                         .HasColumnName("nome");
 
-                    b.Property<byte[]>("SenhaHash")
+                    b.Property<string>("RG")
                         .IsRequired()
-                        .HasColumnType("longblob")
+                        .HasColumnType("longtext")
+                        .HasColumnName("RG");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Salt")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("salt");
+
+                    b.Property<string>("Senha")
+                        .IsRequired()
+                        .HasColumnType("longtext")
                         .HasColumnName("senha");
 
                     b.Property<string>("Username")

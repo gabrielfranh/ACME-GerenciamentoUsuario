@@ -11,5 +11,7 @@ namespace CadastroUsuarioAPI.Services.Interface
         public Task<bool?> UpdateUser(AtualizaUsuarioDTO user);
 
         public Task<bool?> DeleteUser(int userId);
+
+        public Task<(UsuarioDTO usuario, string token)?> Authenticate(LoginDTO login);
     }
 }

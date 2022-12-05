@@ -1,5 +1,7 @@
 using CadastroUsuarioAPI.DTO.Usuario;
 using CadastroUsuarioAPI.Services.Interface;
+using CadastroUsuarioAPI.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CadastroUsuarioAPI.Controllers
@@ -16,6 +18,7 @@ namespace CadastroUsuarioAPI.Controllers
         }
 
         [HttpGet("{userId}")]
+        [Authorize(Roles = "Administrator,Confirmed")]
         public async Task<IActionResult> GetUserById(int userId)
         {
             try
@@ -35,6 +38,7 @@ namespace CadastroUsuarioAPI.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateUser([FromBody] CriaUsuarioDTO user)
         {
             try
@@ -50,6 +54,7 @@ namespace CadastroUsuarioAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Administrator,Confirmed")]
         public async Task<IActionResult> UpdateUser([FromBody] AtualizaUsuarioDTO user)
         {
             try
@@ -70,6 +75,7 @@ namespace CadastroUsuarioAPI.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Administrator,Confirmed")]
         public async Task<IActionResult> Delete(int userId)
         {
             try

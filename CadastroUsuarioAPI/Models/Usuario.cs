@@ -36,7 +36,13 @@ namespace CadastroUsuarioAPI.Models
 
         [Column("senha")]
         [Required]
-        public byte[]? SenhaHash { get; set; }
+        public string Senha { get; set; }
+
+        [Column("salt")]
+        [Required]
+        public string Salt { get; set; }
+
+        public string Role { get; set; }
 
         public virtual ICollection<Endereco> Enderecos { get; set; }
         public virtual ICollection<Telefone> Telefones { get; set; }

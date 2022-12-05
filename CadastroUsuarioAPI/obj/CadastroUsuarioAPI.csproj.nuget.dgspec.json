@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\gabri\\source\\repos\\CadastroUsuarioAPI\\CadastroUsuarioAPI\\CadastroUsuarioAPI.csproj": {}
+    "C:\\Users\\Usuario\\Desktop\\Login\\ProjetoEngenhariaSoftware\\CadastroUsuarioAPI\\CadastroUsuarioAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\gabri\\source\\repos\\CadastroUsuarioAPI\\CadastroUsuarioAPI\\CadastroUsuarioAPI.csproj": {
+    "C:\\Users\\Usuario\\Desktop\\Login\\ProjetoEngenhariaSoftware\\CadastroUsuarioAPI\\CadastroUsuarioAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\gabri\\source\\repos\\CadastroUsuarioAPI\\CadastroUsuarioAPI\\CadastroUsuarioAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\Login\\ProjetoEngenhariaSoftware\\CadastroUsuarioAPI\\CadastroUsuarioAPI.csproj",
         "projectName": "CadastroUsuarioAPI",
-        "projectPath": "C:\\Users\\gabri\\source\\repos\\CadastroUsuarioAPI\\CadastroUsuarioAPI\\CadastroUsuarioAPI.csproj",
-        "packagesPath": "C:\\Users\\gabri\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\gabri\\source\\repos\\CadastroUsuarioAPI\\CadastroUsuarioAPI\\obj\\",
+        "projectPath": "C:\\Users\\Usuario\\Desktop\\Login\\ProjetoEngenhariaSoftware\\CadastroUsuarioAPI\\CadastroUsuarioAPI.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Usuario\\Desktop\\Login\\ProjetoEngenhariaSoftware\\CadastroUsuarioAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\gabri\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -44,11 +44,27 @@
               "target": "Package",
               "version": "[12.0.0, )"
             },
+            "Microsoft.AspNetCore.Authentication": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.11, )"
+            },
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
               "version": "[6.0.11, )"
+            },
+            "Microsoft.Extensions.Identity.Stores": {
+              "target": "Package",
+              "version": "[7.0.0, )"
             },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
@@ -69,7 +85,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -81,7 +98,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -12,5 +12,7 @@ namespace CadastroUsuarioAPI.Repositories.Interface
         public Task<bool> DeleteUser(Usuario usuario);
 
         public Task<Usuario> GetUserById(int userId);
+
+        public Task<Usuario> GetUserByUsername(string userName);
     }
 }
