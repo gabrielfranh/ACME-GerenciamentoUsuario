@@ -22,10 +22,12 @@ namespace CadastroUsuarioAPI.Services
         {
             var usuario = _mapper.Map<Usuario>(criaUsuarioDto);
 
-            var hash = SenhaUtils.GerarHash(criaUsuarioDto.Senha);
+            var salt = SenhaUtils.GerarSalt();
+            var hash = SenhaUtils.GerarHash(criaUsuarioDto.Senha, salt);
 
-            usuario.Senha = hash.senha;
-            usuario.Salt = hash.salt;
+            usuario.Senha = hash;
+            usuario.Salt = SenhaUtils.ToString(salt);
+            usuario.Role = UsuarioUtils.Role.Unconfirmed.ToString();
 
             await _userRepository.CreateUser(usuario);
             var usuarioDto = _mapper.Map<UsuarioDTO>(usuario);
@@ -63,7 +65,8 @@ namespace CadastroUsuarioAPI.Services
         {
             var usuario = await _userRepository.GetUserByUsername(login.Username);
             if (usuario is null) return null;
-            var senhaHash = SenhaUtils.PegarHash(usuario.Senha, usuario.Salt);
+            var salt = SenhaUtils.ToByte(usuario.Salt);
+            var senhaHash = SenhaUtils.GerarHash(login.Senha, salt);
             if (senhaHash != usuario.Senha) return null;
             var token = TokenUtils.Gerar(usuario);
             var usuarioDto = _mapper.Map<UsuarioDTO>(usuario);

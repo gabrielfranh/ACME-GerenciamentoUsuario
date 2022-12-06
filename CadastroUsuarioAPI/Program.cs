@@ -29,7 +29,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddControllers();
 
-var key = Encoding.ASCII.GetBytes("adfgap´wsohgaói");
+var key = Encoding.ASCII.GetBytes("hNF$M9:oTIz1fS*r6?^|t![N2bfNg9K$PKw<OR(Ut@AoYGU%8o");
 builder.Services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

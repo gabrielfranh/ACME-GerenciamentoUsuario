@@ -11,13 +11,13 @@ namespace CadastroUsuarioAPI.Utils
         public static string Gerar(Usuario usuario)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("adfgap´wsohgaói");
+            var key = Encoding.ASCII.GetBytes("hNF$M9:oTIz1fS*r6?^|t![N2bfNg9K$PKw<OR(Ut@AoYGU%8o");
             var tokeDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                     {
                         new Claim(ClaimTypes.Name, usuario.Id.ToString()),
-                        new Claim(ClaimTypes.Role, usuario.Role)
+                        new Claim(ClaimTypes.Role, usuario.Role),
                     }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

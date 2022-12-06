@@ -18,7 +18,7 @@ namespace CadastroUsuarioAPI.Controllers
         }
 
         [HttpGet("{userId}")]
-        [Authorize(Roles = "Administrator,Confirmed")]
+        [Authorize(Roles = "Administrator,Confirmed,Unconfirmed")]
         public async Task<IActionResult> GetUserById(int userId)
         {
             try
@@ -29,7 +29,7 @@ namespace CadastroUsuarioAPI.Controllers
 
                 return Ok(user);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(new {
                     message = ex.Message
@@ -46,7 +46,7 @@ namespace CadastroUsuarioAPI.Controllers
                 var usuarioCriado = await _userService.CreateUser(user);
                 return Created(uri: $"v1/Usuario/{usuarioCriado.Id}", usuarioCriado);
             }
-            catch(Exception ex){
+            catch (Exception ex) {
                 return BadRequest(new {
                     message = ex.Message
                 });
@@ -61,21 +61,21 @@ namespace CadastroUsuarioAPI.Controllers
             {
                 var userUpdated = await _userService.UpdateUser(user);
 
-                if(userUpdated is null) return NotFound();
+                if (userUpdated is null) return NotFound();
 
-                if(userUpdated.Value) return NoContent();
-                
-                return  StatusCode(StatusCodes.Status500InternalServerError);
+                if (userUpdated.Value) return NoContent();
+
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
-            catch(Exception ex){
+            catch (Exception ex) {
                 return BadRequest(new {
                     message = ex.Message
                 });
             }
         }
 
-        [HttpDelete]
-        [Authorize(Roles = "Administrator,Confirmed")]
+        [HttpDelete("{userId}")]
+        [Authorize(Roles = "Administrator,Confirmed,Unconfirmed")]
         public async Task<IActionResult> Delete(int userId)
         {
             try
