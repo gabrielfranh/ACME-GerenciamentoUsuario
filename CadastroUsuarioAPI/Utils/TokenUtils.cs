@@ -8,6 +8,7 @@ namespace CadastroUsuarioAPI.Utils
 {
     public static class TokenUtils
     {
+        public const string ClaimUserId = "UserId";
         public static string Gerar(Usuario usuario)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -16,8 +17,9 @@ namespace CadastroUsuarioAPI.Utils
             {
                 Subject = new ClaimsIdentity(new Claim[]
                     {
-                        new Claim(ClaimTypes.Name, usuario.Id.ToString()),
+                        new Claim(ClaimTypes.Name, usuario.Username),
                         new Claim(ClaimTypes.Role, usuario.Role),
+                        new Claim(ClaimUserId, usuario.Id.ToString()),
                     }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

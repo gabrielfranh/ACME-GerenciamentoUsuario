@@ -8,7 +8,7 @@ namespace CadastroUsuarioAPI.Services.Interface
 
         public Task<UsuarioDTO> CreateUser(CriaUsuarioDTO user);
 
-        public Task<bool?> UpdateUser(AtualizaUsuarioDTO user);
+        public Task<bool?> UpdateUser(int userId, AtualizaUsuarioDTO user);
 
         public Task<bool?> DeleteUser(int userId);
 

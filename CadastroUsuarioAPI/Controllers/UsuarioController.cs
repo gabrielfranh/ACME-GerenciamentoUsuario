@@ -3,6 +3,7 @@ using CadastroUsuarioAPI.Services.Interface;
 using CadastroUsuarioAPI.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CadastroUsuarioAPI.Controllers
 {
@@ -17,12 +18,13 @@ namespace CadastroUsuarioAPI.Controllers
             _userService = userService;
         }
 
-        [HttpGet("{userId}")]
+        [HttpGet]
         [Authorize(Roles = "Administrator,Confirmed,Unconfirmed")]
-        public async Task<IActionResult> GetUserById(int userId)
+        public async Task<IActionResult> GetUserById()
         {
             try
             {
+                var userId = GetUserId();
                 var user = await _userService.GetUserById(userId);
 
                 if (user == null) return NotFound();
@@ -59,7 +61,9 @@ namespace CadastroUsuarioAPI.Controllers
         {
             try
             {
-                var userUpdated = await _userService.UpdateUser(user);
+                var userId = GetUserId();
+
+                var userUpdated = await _userService.UpdateUser(userId, user);
 
                 if (userUpdated is null) return NotFound();
 
@@ -74,12 +78,14 @@ namespace CadastroUsuarioAPI.Controllers
             }
         }
 
-        [HttpDelete("{userId}")]
+        [HttpDelete]
         [Authorize(Roles = "Administrator,Confirmed,Unconfirmed")]
-        public async Task<IActionResult> Delete(int userId)
+        public async Task<IActionResult> Delete()
         {
             try
             {
+                var userId = GetUserId();
+
                 var userDeleted = await _userService.DeleteUser(userId);
 
                 if (userDeleted is null) return NotFound();
@@ -93,6 +99,15 @@ namespace CadastroUsuarioAPI.Controllers
                     message = ex.Message
                 });
             }
+        }
+
+        private int GetUserId()
+        {
+            var userClaimName = User.Claims.Where(claim => claim.Type.Equals(TokenUtils.ClaimUserId)).First();
+
+            var userId = Convert.ToInt32(userClaimName.Value);
+
+            return userId;
         }
     }
 }

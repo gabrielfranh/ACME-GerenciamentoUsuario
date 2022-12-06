@@ -34,9 +34,9 @@ namespace CadastroUsuarioAPI.Services
             return usuarioDto;
         }
 
-        public async Task<bool?> UpdateUser(AtualizaUsuarioDTO atualizaUsuarioDTO)
+        public async Task<bool?> UpdateUser(int userId, AtualizaUsuarioDTO atualizaUsuarioDTO)
         {
-            var usuario = await _userRepository.GetUserById(atualizaUsuarioDTO.Id);
+            var usuario = await _userRepository.GetUserById(userId);
 
             if (usuario is null) return null;
 
