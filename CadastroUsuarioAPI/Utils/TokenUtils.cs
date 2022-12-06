@@ -6,13 +6,21 @@ using System.Security.Claims;
 
 namespace CadastroUsuarioAPI.Utils
 {
-    public static class TokenUtils
+    public class TokenUtils
     {
+        private readonly ConfigurationManager _configuration;
+
         public const string ClaimUserId = "UserId";
-        public static string Gerar(Usuario usuario)
+
+        public TokenUtils(ConfigurationManager configuration)
+        {
+            _configuration= configuration;
+        }
+
+        public string Gerar(Usuario usuario)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("hNF$M9:oTIz1fS*r6?^|t![N2bfNg9K$PKw<OR(Ut@AoYGU%8o");
+            var key = Encoding.ASCII.GetBytes(_configuration["MySqlConnection:MySQLConnectionString"]);
             var tokeDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]

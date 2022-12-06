@@ -11,11 +11,13 @@ namespace CadastroUsuarioAPI.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly TokenUtils _tokenUtils;
 
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        public UserService(IUserRepository userRepository, IMapper mapper, TokenUtils tokenUtils)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _tokenUtils = tokenUtils;
         }
 
         public async Task<UsuarioDTO> CreateUser(CriaUsuarioDTO criaUsuarioDto)
@@ -68,7 +70,7 @@ namespace CadastroUsuarioAPI.Services
             var salt = SenhaUtils.ToByte(usuario.Salt);
             var senhaHash = SenhaUtils.GerarHash(login.Senha, salt);
             if (senhaHash != usuario.Senha) return null;
-            var token = TokenUtils.Gerar(usuario);
+            var token = _tokenUtils.Gerar(usuario);
             var usuarioDto = _mapper.Map<UsuarioDTO>(usuario);
             return (usuarioDto, token);
         }
