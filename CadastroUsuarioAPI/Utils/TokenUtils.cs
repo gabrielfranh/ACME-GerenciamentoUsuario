@@ -20,7 +20,7 @@ namespace CadastroUsuarioAPI.Utils
         public string Gerar(Usuario usuario)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["MySqlConnection:MySQLConnectionString"]);
+            var key = Encoding.ASCII.GetBytes(_configuration["Token:SecretKey"]);
             var tokeDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
