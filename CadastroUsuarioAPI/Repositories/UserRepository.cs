@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using CadastroUsuarioAPI.Context;
-using CadastroUsuarioAPI.DTO.Usuario;
 using CadastroUsuarioAPI.Models;
 using CadastroUsuarioAPI.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -10,12 +9,10 @@ namespace CadastroUsuarioAPI.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly MySQLContext _mySQLContext;
-        private readonly IMapper _mapper;
 
-        public UserRepository(MySQLContext mySQLContext, IMapper mapper)
+        public UserRepository(MySQLContext mySQLContext)
         {
             _mySQLContext = mySQLContext;
-            _mapper = mapper;
         }
 
         public async Task<Usuario> CreateUser(Usuario usuario)

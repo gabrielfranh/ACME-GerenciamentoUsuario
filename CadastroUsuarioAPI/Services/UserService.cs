@@ -4,6 +4,9 @@ using CadastroUsuarioAPI.Models;
 using CadastroUsuarioAPI.Utils;
 using CadastroUsuarioAPI.Repositories.Interface;
 using CadastroUsuarioAPI.Services.Interface;
+using RabbitMQ.Client;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace CadastroUsuarioAPI.Services
 {
@@ -12,6 +15,7 @@ namespace CadastroUsuarioAPI.Services
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly TokenUtils _tokenUtils;
+        private RabbitMQService _rabbitMQService;
 
         public UserService(IUserRepository userRepository, IMapper mapper, TokenUtils tokenUtils)
         {
@@ -33,6 +37,12 @@ namespace CadastroUsuarioAPI.Services
 
             await _userRepository.CreateUser(usuario);
             var usuarioDto = _mapper.Map<UsuarioDTO>(usuario);
+
+            if (_rabbitMQService == null)
+                _rabbitMQService = new RabbitMQService("localhost");
+
+            _rabbitMQService.RabbitMQBasicPublish("createUser", criaUsuarioDto);
+
             return usuarioDto;
         }
 
@@ -44,6 +54,12 @@ namespace CadastroUsuarioAPI.Services
 
             atualizaUsuarioDTO.Copy(usuario);
             var usuarioAtualizado = await _userRepository.UpdateUser(usuario);
+
+            if (_rabbitMQService == null)
+                _rabbitMQService = new RabbitMQService("localhost");
+
+            _rabbitMQService.RabbitMQBasicPublish("createUser", atualizaUsuarioDTO);
+
             return usuarioAtualizado;
         }
 
@@ -52,6 +68,12 @@ namespace CadastroUsuarioAPI.Services
             var usuario = await _userRepository.GetUserById(userId);
             if (usuario is null) return null;
             var usuarioDeletado = await _userRepository.DeleteUser(usuario);
+
+            if (_rabbitMQService == null)
+                _rabbitMQService = new RabbitMQService("localhost");
+
+            _rabbitMQService.RabbitMQBasicPublish("createUser", userId);
+
             return usuarioDeletado;
         }
 
