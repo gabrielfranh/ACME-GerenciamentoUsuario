@@ -33,7 +33,7 @@ namespace UnitTests
         public async void CreateUser()
         {
             var user = new Mock<CriaUsuarioDTO>();
-            var result = await _controller.CreateUser(user.Object);
+            var result = _controller.CreateUser(user.Object);
 
             Assert.NotNull(result);
         }
