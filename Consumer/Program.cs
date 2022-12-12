@@ -20,7 +20,7 @@ class ReceiveLogs
                               exchange: "createUser",
                               routingKey: "");
 
-            Console.WriteLine(" [*] Waiting for createUser.");
+            Console.WriteLine(" [*] Waiting for User messages.");
 
             var consumer = new EventingBasicConsumer(channel);
             consumer.Received += (model, ea) =>
