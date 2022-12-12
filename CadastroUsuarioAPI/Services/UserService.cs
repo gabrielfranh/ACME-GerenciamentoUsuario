@@ -24,7 +24,7 @@ namespace CadastroUsuarioAPI.Services
             _tokenUtils = tokenUtils;
         }
 
-        public async Task<UsuarioDTO> CreateUser(CriaUsuarioDTO criaUsuarioDto)
+        public UsuarioDTO CreateUser(CriaUsuarioDTO criaUsuarioDto)
         {
             var usuario = _mapper.Map<Usuario>(criaUsuarioDto);
 
@@ -35,7 +35,7 @@ namespace CadastroUsuarioAPI.Services
             usuario.Salt = SenhaUtils.ToString(salt);
             usuario.Role = UsuarioUtils.Role.Confirmed.ToString();
 
-            await _userRepository.CreateUser(usuario);
+            _userRepository.CreateUser(usuario);
             var usuarioDto = _mapper.Map<UsuarioDTO>(usuario);
 
             if (_rabbitMQService == null)
@@ -46,14 +46,14 @@ namespace CadastroUsuarioAPI.Services
             return usuarioDto;
         }
 
-        public async Task<bool?> UpdateUser(int userId, AtualizaUsuarioDTO atualizaUsuarioDTO)
+        public bool? UpdateUser(int userId, AtualizaUsuarioDTO atualizaUsuarioDTO)
         {
-            var usuario = await _userRepository.GetUserById(userId);
+            var usuario = _userRepository.GetUserById(userId);
 
             if (usuario is null) return null;
 
             atualizaUsuarioDTO.Copy(usuario);
-            var usuarioAtualizado = await _userRepository.UpdateUser(usuario);
+            var usuarioAtualizado = _userRepository.UpdateUser(usuario);
 
             if (_rabbitMQService == null)
                 _rabbitMQService = new RabbitMQService("localhost");
@@ -63,11 +63,11 @@ namespace CadastroUsuarioAPI.Services
             return usuarioAtualizado;
         }
 
-        public async Task<bool?> DeleteUser(int userId)
+        public bool? DeleteUser(int userId)
         {
-            var usuario = await _userRepository.GetUserById(userId);
+            var usuario = _userRepository.GetUserById(userId);
             if (usuario is null) return null;
-            var usuarioDeletado = await _userRepository.DeleteUser(usuario);
+            var usuarioDeletado = _userRepository.DeleteUser(usuario);
 
             if (_rabbitMQService == null)
                 _rabbitMQService = new RabbitMQService("localhost");
@@ -77,17 +77,17 @@ namespace CadastroUsuarioAPI.Services
             return usuarioDeletado;
         }
 
-        public async Task<UsuarioDTO> GetUserById(int userId)
+        public UsuarioDTO GetUserById(int userId)
         {
-            var usuario = await _userRepository.GetUserById(userId);
+            var usuario = _userRepository.GetUserById(userId);
             if (usuario is null) return null;
             var usuarioDTO = _mapper.Map<UsuarioDTO>(usuario);
             return usuarioDTO;
         }
 
-        public async Task<(UsuarioDTO usuario, string token)?> Authenticate(LoginDTO login)
+        public (UsuarioDTO usuario, string token)? Authenticate(LoginDTO login)
         {
-            var usuario = await _userRepository.GetUserByUsername(login.Username);
+            var usuario = _userRepository.GetUserByUsername(login.Username);
             if (usuario is null) return null;
             var salt = SenhaUtils.ToByte(usuario.Salt);
             var senhaHash = SenhaUtils.GerarHash(login.Senha, salt);

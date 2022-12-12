@@ -15,19 +15,19 @@ namespace CadastroUsuarioAPI.Repositories
             _mySQLContext = mySQLContext;
         }
 
-        public async Task<Usuario> CreateUser(Usuario usuario)
+        public Usuario CreateUser(Usuario usuario)
         {
-            await _mySQLContext.Usuarios.AddAsync(usuario);
-            await _mySQLContext.SaveChangesAsync();
+            _mySQLContext.Usuarios.Add(usuario);
+            _mySQLContext.SaveChanges();
             return usuario;
         }
 
-        public async Task<bool> UpdateUser(Usuario usuario)
+        public bool UpdateUser(Usuario usuario)
         {
             try
             {
                 _mySQLContext.Usuarios.Update(usuario);
-                await _mySQLContext.SaveChangesAsync();
+                _mySQLContext.SaveChanges();
                 return true;
             }
             catch(Exception)
@@ -36,12 +36,12 @@ namespace CadastroUsuarioAPI.Repositories
             }
         }
 
-        public async Task<bool> DeleteUser(Usuario usuario)
+        public bool DeleteUser(Usuario usuario)
         {
             try
             {
                 _mySQLContext.Usuarios.Remove(usuario);
-                await _mySQLContext.SaveChangesAsync();
+                _mySQLContext.SaveChanges();
                 return true;
             }
             catch (Exception)
@@ -50,15 +50,15 @@ namespace CadastroUsuarioAPI.Repositories
             }
         }
 
-        public async Task<Usuario> GetUserById(int userId)
+        public Usuario GetUserById(int userId)
         {
-            var user = await _mySQLContext.Usuarios.FirstOrDefaultAsync(user => user.Id == userId);
+            var user = _mySQLContext.Usuarios.FirstOrDefault(user => user.Id == userId);
             return user;
         }
 
-        public async Task<Usuario> GetUserByUsername(string userName)
+        public Usuario GetUserByUsername(string userName)
         {
-            var user = await _mySQLContext.Usuarios.FirstOrDefaultAsync(x => x.Username == userName);
+            var user = _mySQLContext.Usuarios.FirstOrDefault(x => x.Username == userName);
             return user;
         }
     }

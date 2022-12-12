@@ -18,11 +18,11 @@ namespace CadastroUsuarioAPI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Authenticate([FromBody] LoginDTO login)
+        public IActionResult Authenticate([FromBody] LoginDTO login)
         {
             try
             {
-                var usuario = await _userService.Authenticate(login);
+                var usuario = _userService.Authenticate(login);
                 if (usuario == null) return NotFound("Usuário ou senha inválidos");
                 return Ok(new
                 {

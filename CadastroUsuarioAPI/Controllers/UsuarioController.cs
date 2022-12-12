@@ -20,12 +20,12 @@ namespace CadastroUsuarioAPI.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Administrator,Confirmed,Unconfirmed")]
-        public async Task<IActionResult> GetUserById()
+        public IActionResult GetUserById()
         {
             try
             {
                 var userId = GetUserId();
-                var user = await _userService.GetUserById(userId);
+                var user = _userService.GetUserById(userId);
 
                 if (user == null) return NotFound();
 
@@ -41,11 +41,11 @@ namespace CadastroUsuarioAPI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> CreateUser([FromBody] CriaUsuarioDTO user)
+        public IActionResult CreateUser([FromBody] CriaUsuarioDTO user)
         {
             try
             {
-                var usuarioCriado = await _userService.CreateUser(user);
+                var usuarioCriado = _userService.CreateUser(user);
                 return Created(uri: $"v1/Usuario/{usuarioCriado.Id}", usuarioCriado);
             }
             catch (Exception ex) {
@@ -57,13 +57,13 @@ namespace CadastroUsuarioAPI.Controllers
 
         [HttpPut]
         [Authorize(Roles = "Administrator,Confirmed")]
-        public async Task<IActionResult> UpdateUser([FromBody] AtualizaUsuarioDTO user)
+        public IActionResult UpdateUser([FromBody] AtualizaUsuarioDTO user)
         {
             try
             {
                 var userId = GetUserId();
 
-                var userUpdated = await _userService.UpdateUser(userId, user);
+                var userUpdated = _userService.UpdateUser(userId, user);
 
                 if (userUpdated is null) return NotFound();
 
@@ -79,14 +79,14 @@ namespace CadastroUsuarioAPI.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles = "Administrator,Confirmed,Unconfirmed")]
-        public async Task<IActionResult> Delete()
+        [Authorize(Roles = "Administrator")]
+        public IActionResult Delete()
         {
             try
             {
                 var userId = GetUserId();
 
-                var userDeleted = await _userService.DeleteUser(userId);
+                var userDeleted = _userService.DeleteUser(userId);
 
                 if (userDeleted is null) return NotFound();
                 
