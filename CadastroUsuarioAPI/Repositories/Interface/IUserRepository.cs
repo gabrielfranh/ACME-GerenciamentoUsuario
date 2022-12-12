@@ -5,14 +5,14 @@ namespace CadastroUsuarioAPI.Repositories.Interface
 {
     public interface IUserRepository
     {
-        public Task<Usuario> CreateUser(Usuario usuario);
+        public Usuario CreateUser(Usuario usuario);
 
-        public Task<bool> UpdateUser(Usuario usuario);
+        public bool UpdateUser(Usuario usuario);
 
-        public Task<bool> DeleteUser(Usuario usuario);
+        public bool DeleteUser(Usuario usuario);
 
-        public Task<Usuario> GetUserById(int userId);
+        public Usuario GetUserById(int userId);
 
-        public Task<Usuario> GetUserByUsername(string userName);
+        public Usuario GetUserByUsername(string userName);
     }
 }
