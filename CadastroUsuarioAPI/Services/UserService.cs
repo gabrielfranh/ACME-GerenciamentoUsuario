@@ -33,7 +33,7 @@ namespace CadastroUsuarioAPI.Services
 
             usuario.Senha = hash;
             usuario.Salt = SenhaUtils.ToString(salt);
-            usuario.Role = UsuarioUtils.Role.Unconfirmed.ToString();
+            usuario.Role = UsuarioUtils.Role.Confirmed.ToString();
 
             await _userRepository.CreateUser(usuario);
             var usuarioDto = _mapper.Map<UsuarioDTO>(usuario);
